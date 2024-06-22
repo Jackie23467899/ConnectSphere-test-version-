@@ -132,39 +132,43 @@
         }
 
         /* Dark mode switch */
-        .dark-mode-switch {
+        .darkmode-switch {
             position: absolute;
             top: 10px;
             right: 10px;
             display: flex;
             align-items: center;
+            color: white;
+            z-index: 999; /* Ensure it's above other elements */
         }
 
-        .dark-mode-switch input[type="checkbox"] {
+        .darkmode-switch input[type="checkbox"] {
             display: none;
         }
 
-        .dark-mode-switch label {
-            display: flex;
-            align-items: center;
-            margin-right: 5px;
-            cursor: pointer;
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            background-color: gray;
+            border-radius: 15px;
+            margin: 0 10px;
         }
 
-        .sun-icon,
-        .moon-icon {
-            font-size: 24px;
-            color: #ffcc00; /* Change color for sun and moon icons */
+        .switch div {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
         }
 
-        /* Hide light mode logo in dark mode */
-        body.dark-mode .logo #lightLogo {
-            display: none;
-        }
-
-        /* Hide dark mode logo in light mode */
-        body:not(.dark-mode) .logo #darkLogo {
-            display: none;
+        input[type="checkbox"]:checked + .switch div {
+            transform: translateX(20px);
         }
     </style>
 </head>
@@ -178,13 +182,13 @@
             </div>
             <h1>Welcome to Social Media App</h1>
             <!-- Dark mode switch -->
-            <div class="dark-mode-switch">
-                <label for="darkModeToggle">
-                    <i class="sun-icon fas fa-sun"></i>
-                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" />
-                    <i class="moon-icon fas fa-moon"></i>
+            <div class="darkmode-switch">
+                <span>LIGHT</span>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                    <div></div>
                 </label>
-                <span>Dark Mode</span>
+                <span>DARK</span>
             </div>
         </div>
     </header>
@@ -238,17 +242,16 @@
             <p>&copy; 2024 Social Media App. All rights reserved.</p>
         </div>
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script>
         function toggleDarkMode() {
             const body = document.body;
             const isDarkMode = body.classList.toggle('dark-mode');
-            const darkLogo = document.getElementById('darkLogo');
             const lightLogo = document.getElementById('lightLogo');
+            const darkLogo = document.getElementById('darkLogo');
 
-            // Toggle between dark and light mode logos
-            darkLogo.style.display = isDarkMode ? 'block' : 'none';
-            lightLogo.style.display = isDarkMode ? 'none' : 'block';
+            // Change logo based on dark mode status
+            lightLogo.style.display = isDarkMode ? 'none' : 'inline-block';
+            darkLogo.style.display = isDarkMode ? 'inline-block' : 'none';
         }
     </script>
 </body>
