@@ -192,29 +192,38 @@
             transform: translateX(26px);
         }
 
-        /* Switch icon colors */
-        .switch input:checked + .slider .sun-icon {
-            display: none;
-        }
-
-        .switch input:checked + .slider .moon-icon {
-            display: inline-block;
-        }
-
+        .switch .sun-icon,
         .switch .moon-icon {
-            display: none;
-            color: white;
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
         }
 
         .switch .sun-icon {
-            display: inline-block;
-            color: yellow;
-            position: absolute;
-            top: 5px;
-            left: 5px;
+            left: 10px;
+            color: #FFA500;
+        }
+
+        .switch .moon-icon {
+            right: 10px;
+            color: #FFF;
+        }
+
+        input:checked + .slider .sun-icon {
+            display: none;
+        }
+
+        input:checked + .slider .moon-icon {
+            display: block;
+        }
+
+        input:not(:checked) + .slider .sun-icon {
+            display: block;
+        }
+
+        input:not(:checked) + .slider .moon-icon {
+            display: none;
         }
     </style>
 </head>
@@ -296,9 +305,13 @@
             const lightLogo = document.getElementById('lightLogo');
             const darkLogo = document.getElementById('darkLogo');
 
-            // Change logo based on dark mode status
-            lightLogo.style.display = isDarkMode ? 'none' : 'inline-block';
-            darkLogo.style.display = isDarkMode ? 'inline-block' : 'none';
+            if (isDarkMode) {
+                lightLogo.style.display = 'none';
+                darkLogo.style.display = 'block';
+            } else {
+                lightLogo.style.display = 'block';
+                darkLogo.style.display = 'none';
+            }
         }
     </script>
 </body>
