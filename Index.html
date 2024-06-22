@@ -45,8 +45,9 @@
             padding: 5px;
             transition: background-color 0.3s;
             position: absolute; /* Added absolute positioning */
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the logo */
         }
 
         .dark-mode .logo img.light-mode-logo {
@@ -176,7 +177,7 @@
             <!-- Logo with light mode and dark mode versions -->
             <div class="logo">
                 <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Light Mode Logo" class="light-mode-logo">
-                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" class="dark-mode-logo">
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" class="dark-mode-logo" style="display:none;">
             </div>
             <h1>Welcome to Social Media App</h1>
             <!-- Dark mode toggle button -->
