@@ -43,10 +43,13 @@
             background-color: white;
             padding: 5px;
             transition: background-color 0.3s;
-            display: none; /* Initially hide both logo versions */
         }
 
-        .dark-mode .dark-mode-logo {
+        .dark-mode .logo img.light-mode-logo {
+            display: none; /* Hide light mode logo in dark mode */
+        }
+
+        .dark-mode .logo img.dark-mode-logo {
             display: block; /* Show dark mode logo in dark mode */
         }
 
@@ -168,7 +171,7 @@
         <div class="container">
             <!-- Logo with light mode and dark mode versions -->
             <div class="logo">
-               
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Light Mode Logo" class="light-mode-logo">
                 <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" class="dark-mode-logo">
             </div>
             <h1>Welcome to Social Media App</h1>
@@ -237,11 +240,13 @@
             const body = document.body;
             const isDarkMode = body.classList.toggle('dark-mode');
             const darkModeLogo = document.querySelector('.dark-mode-logo');
+            const lightModeLogo = document.querySelector('.light-mode-logo');
             const sunIcon = document.querySelector('.sun-icon');
             const moonIcon = document.querySelector('.moon-icon');
 
             // Change logo and icons based on dark mode status
-            darkModeLogo.src = isDarkMode ? 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true' : 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true';
+            darkModeLogo.style.display = isDarkMode ? 'block' : 'none';
+            lightModeLogo.style.display = isDarkMode ? 'none' : 'block';
             moonIcon.style.display = isDarkMode ? 'inline-block' : 'none';
             sunIcon.style.display = isDarkMode ? 'none' : 'inline-block';
             document.querySelector('.dark-mode-toggle').innerText = isDarkMode ? 'Light Mode' : 'Dark Mode'; // Update button text
