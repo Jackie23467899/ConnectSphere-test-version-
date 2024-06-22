@@ -28,16 +28,36 @@
             color: white;
             padding: 1em 0;
             text-align: center;
-            position: relative;
         }
 
-        .logo img {
-            width: 60px; /* Updated width */
-            height: 60px; /* Updated height */
+        .logo-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            z-index: 2; /* Ensure logo is above text */
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             background-color: white;
             padding: 5px;
             transition: background-color 0.3s;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1; /* Ensure logo is above text */
+        }
+
+        .dark-mode .logo-container img.light-mode-logo {
+            display: none;
+        }
+
+        .dark-mode .logo-container img.dark-mode-logo {
+            display: block;
         }
 
         h1 {
@@ -132,100 +152,24 @@
             background-color: #1a1a1a;
         }
 
-        /* Dark mode switch */
-        .darkmode-switch {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Dark mode toggle button */
+        .dark-mode-toggle {
             position: absolute;
             top: 10px;
             right: 10px;
-            z-index: 1000;
-        }
-
-        .darkmode-switch span {
-            margin: 0 10px;
+            background-color: transparent;
             color: white;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
+            border: none;
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .switch .sun-icon,
-        .switch .moon-icon {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
             font-size: 18px;
-            color: #000;
         }
 
-        .switch .sun-icon {
-            left: 10px;
-            color: black; /* Sun icon color */
-        }
-
-        .switch .moon-icon {
-            right: 10px;
-            color: white; /* Moon icon color */
-        }
-
-        input:checked + .slider .sun-icon {
+        .sun-icon {
             display: none;
         }
 
-        input:checked + .slider .moon-icon {
-            display: block;
-        }
-
-        input:not(:checked) + .slider .sun-icon {
-            display: block;
-        }
-
-        input:not(:checked) + .slider .moon-icon {
-            display: none;
+        .moon-icon {
+            display: inline-block;
         }
     </style>
 </head>
@@ -233,22 +177,17 @@
     <header>
         <div class="container">
             <!-- Logo with light mode and dark mode versions -->
-            <div class="logo">
-                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Light Mode Logo">
-                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" class="dark-mode-logo">
+            <div class="logo-container">
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Light Mode Logo" class="light-mode-logo">
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" class="dark-mode-logo" style="display:none;">
             </div>
             <h1>Welcome to Social Media App</h1>
-            <!-- Dark mode switch -->
-            <div class="darkmode-switch">
-                <span>LIGHT</span>
-                <label class="switch">
-                    <input type="checkbox" name="toggle-darkmode">
-                    <div class="slider"></div>
-                    <i class="sun-icon fas fa-sun"></i>
-                    <i class="moon-icon fas fa-moon"></i>
-                </label>
-                <span>DARK</span>
-            </div>
+            <!-- Dark mode toggle button -->
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+                <i class="sun-icon fas fa-sun"></i>
+                <i class="moon-icon fas fa-moon"></i>
+                Dark Mode
+            </button>
         </div>
     </header>
     <nav>
@@ -267,6 +206,20 @@
                 <h2>Connect. Share. Discover.</h2>
                 <img src="https://via.placeholder.com/1200x600?text=Welcome+Image" alt="Welcome Image">
                 <p>Welcome to our vibrant social media platform, where you can connect with friends, share your thoughts, and discover new ideas.</p>
+            </div>
+        </section>
+        <section id="about">
+            <div class="container">
+                <h2>About Us</h2>
+                <img src="https://via.placeholder.com/1200x600?text=About+Us+Image" alt="About Us Image">
+                <p>Our social media platform is designed to bring people together, foster meaningful connections, and empower users to express themselves.</p>
+            </div>
+        </section>
+        <section id="features">
+            <div class="container">
+                <h2>Key Features</h2>
+                <img src="https://via.placeholder.com/1200x600?text=Features+Image" alt="Features Image">
+            <p>Welcome to our vibrant social media platform, where you can connect with friends, share your thoughts, and discover new ideas.</p>
             </div>
         </section>
         <section id="about">
@@ -302,22 +255,28 @@
         </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-        <script>
-        const switchInput = document.querySelector('input[name="toggle-darkmode"]');
-        const sunIcon = document.querySelector('.sun-icon');
-        const moonIcon = document.querySelector('.moon-icon');
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            const isDarkMode = body.classList.toggle('dark-mode');
+            const darkModeLogo = document.querySelector('.dark-mode-logo');
+            const lightModeLogo = document.querySelector('.light-mode-logo');
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
 
-        switchInput.addEventListener('change', () => {
-            if (switchInput.checked) {
-                document.body.classList.add('dark-mode');
-                sunIcon.style.color = 'black'; // Change sun icon color to black
-                moonIcon.style.color = 'white'; // Change moon icon color to white
-            } else {
-                document.body.classList.remove('dark-mode');
-                sunIcon.style.color = 'white'; // Change sun icon color back to white
-                moonIcon.style.color = 'black'; // Change moon icon color back to black
-            }
-        });
+            // Change logo and icons based on dark mode status
+            darkModeLogo.style.display = isDarkMode ? 'block' : 'none';
+            lightModeLogo.style.display = isDarkMode ? 'none' : 'block';
+            moonIcon.style.display = isDarkMode ? 'inline-block' : 'none';
+            sunIcon.style.display = isDarkMode ? 'none' : 'inline-block';
+            document.querySelector('.dark-mode-toggle').innerText = isDarkMode ? 'Light Mode' : 'Dark Mode'; // Update button text
+        }
+
+        // Initial check for dark mode preference
+        const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDarkMode) {
+            toggleDarkMode(); // If the system prefers dark mode, switch to dark mode on page load
+        }
     </script>
 </body>
 </html>
