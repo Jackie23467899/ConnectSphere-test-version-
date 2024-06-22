@@ -31,7 +31,7 @@
             text-align: center;
         }
 
-        header h1 img {
+        header img {
             width: 80px;
             height: 80px;
             margin-bottom: 1em;
@@ -102,7 +102,7 @@
         }
 
         /* Light mode logo */
-        header h1::before {
+        header::before {
             content: url('https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true');
             display: block;
             margin: 0 auto;
@@ -137,7 +137,7 @@
             background-color: #1a1a1a;
         }
 
-        body.dark-mode header h1::before {
+        body.dark-mode header::before {
             content: url('https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true');
         }
 
@@ -169,7 +169,6 @@
     <header>
         <div class="container">
             <h1>Welcome to Social Media App</h1>
-            <img id="logo" src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Logo">
             <button id="theme-toggle">Toggle Dark Mode</button>
         </div>
     </header>
@@ -226,12 +225,6 @@
     <script>
         document.getElementById('theme-toggle').addEventListener('click', function() {
             document.body.classList.toggle('dark-mode');
-            const logo = document.getElementById('logo');
-            if (document.body.classList.contains('dark-mode')) {
-                logo.src = 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true';
-            } else {
-                logo.src = 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true';
-            }
         });
     </script>
 </body>
