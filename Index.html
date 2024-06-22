@@ -256,6 +256,12 @@
             sunIcon.style.display = isDarkMode ? 'none' : 'inline-block';
             document.querySelector('.dark-mode-toggle').innerText = isDarkMode ? 'Light Mode' : 'Dark Mode'; // Update button text
         }
+
+        // Initial check for dark mode preference
+        const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDarkMode) {
+            toggleDarkMode(); // If the system prefers dark mode, switch to dark mode on page load
+        }
     </script>
 </body>
 </html>
