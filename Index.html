@@ -30,6 +30,12 @@
             text-align: center;
         }
 
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .logo img {
             width: 80px;
             height: 80px;
@@ -37,6 +43,11 @@
             background-color: white;
             padding: 5px;
             transition: background-color 0.3s;
+            display: none; /* Initially hide both logo versions */
+        }
+
+        .dark-mode .dark-mode-logo {
+            display: block; /* Show dark mode logo in dark mode */
         }
 
         h1 {
@@ -233,6 +244,7 @@
             darkModeLogo.src = isDarkMode ? 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true' : 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true';
             moonIcon.style.display = isDarkMode ? 'inline-block' : 'none';
             sunIcon.style.display = isDarkMode ? 'none' : 'inline-block';
+            document.querySelector('.dark-mode-toggle').innerText = isDarkMode ? 'Light Mode' : 'Dark Mode'; // Update button text
         }
     </script>
 </body>
