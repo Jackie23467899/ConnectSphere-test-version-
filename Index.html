@@ -28,6 +28,7 @@
             color: white;
             padding: 1em 0;
             text-align: center;
+            position: relative;
         }
 
         .logo img {
@@ -133,17 +134,17 @@
 
         /* Dark mode switch */
         .darkmode-switch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: absolute;
             top: 10px;
             right: 10px;
-            display: flex;
-            align-items: center;
-            color: white;
-            z-index: 999; /* Ensure it's above other elements */
         }
 
-        .darkmode-switch input[type="checkbox"] {
-            display: none;
+        .darkmode-switch span {
+            margin: 0 10px;
+            color: white;
         }
 
         .switch {
@@ -154,7 +155,9 @@
         }
 
         .switch input {
-            display: none;
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
         .slider {
@@ -165,7 +168,7 @@
             right: 0;
             bottom: 0;
             background-color: #ccc;
-            transition: 0.4s;
+            transition: .4s;
             border-radius: 34px;
         }
 
@@ -177,7 +180,7 @@
             left: 4px;
             bottom: 4px;
             background-color: white;
-            transition: 0.4s;
+            transition: .4s;
             border-radius: 50%;
         }
 
@@ -189,29 +192,51 @@
             transform: translateX(26px);
         }
 
-        .slider.round {
-            border-radius: 34px;
+        /* Switch icon colors */
+        .switch input:checked + .slider .sun-icon {
+            display: none;
         }
 
-        .slider.round:before {
-            border-radius: 50%;
+        .switch input:checked + .slider .moon-icon {
+            display: inline-block;
+        }
+
+        .switch .moon-icon {
+            display: none;
+            color: white;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        .switch .sun-icon {
+            display: inline-block;
+            color: yellow;
+            position: absolute;
+            top: 5px;
+            left: 5px;
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <!-- Logo with light mode and dark mode versions -->
             <div class="logo">
                 <img id="lightLogo" src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Light Mode Logo">
-                <img id="darkLogo" src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" style="display:none;">
+                <img id="darkLogo" src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" style="display: none;">
             </div>
             <h1>Welcome to Social Media App</h1>
-            <!-- Dark mode switch -->
-            <label class="switch">
-                <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
-                <span class="slider round"></span>
-            </label>
+            <div class="darkmode-switch">
+                <span>LIGHT</span>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                    <div class="slider">
+                        <i class="sun-icon fas fa-sun"></i>
+                        <i class="moon-icon fas fa-moon"></i>
+                    </div>
+                </label>
+                <span>DARK</span>
+            </div>
         </div>
     </header>
     <nav>
@@ -261,7 +286,6 @@
     </main>
     <footer>
         <div class="container">
-           
             <p>&copy; 2024 Social Media App. All rights reserved.</p>
         </div>
     </footer>
