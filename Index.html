@@ -152,7 +152,7 @@
             </div>
             <h1>Welcome to Social Media App</h1>
             <!-- Dark mode toggle button -->
-            <button class="dark-mode-toggle" onclick="toggleDarkMode()"><i class="fas fa-sun"></i></button>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
         </div>
     </header>
     <nav>
@@ -205,7 +205,6 @@
             <p>&copy; 2024 Social Media App. All rights reserved.</p>
         </div>
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script>
         // JavaScript for toggling dark mode
         const body = document.body;
@@ -214,7 +213,7 @@
         function toggleDarkMode() {
             body.classList.toggle('dark-mode');
             const isDarkMode = body.classList.contains('dark-mode');
-            darkModeToggle.innerHTML = isDarkMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            darkModeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
         }
     </script>
 </body>
