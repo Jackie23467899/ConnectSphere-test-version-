@@ -34,9 +34,9 @@
 
         .logo {
             position: absolute; /* Absolute positioning for the logo */
-            top: 50%;
+            top: 10px;
             left: 50%;
-            transform: translate(-50%, -50%); /* Center the logo */
+            transform: translateX(-50%); /* Center horizontally */
             z-index: 1; /* Ensure logo is above other content */
         }
 
@@ -49,7 +49,7 @@
         }
 
         h1 {
-            margin-top: 50px; /* Adjust top margin for header content */
+            margin-top: 150px; /* Adjust top margin for header content */
         }
 
         nav {
@@ -179,9 +179,9 @@
 <body>
     <header>
         <div class="container">
-            <!-- Display the logo in the header -->
+            <!-- Small logo -->
             <div class="logo">
-                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Logo">
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Logo" class="small-logo">
             </div>
             <h1>Welcome to Social Media App</h1>
         </div>
@@ -239,11 +239,17 @@
     <script>
         // JavaScript for toggling dark mode
         const body = document.body;
-        const darkModeToggle = document.querySelector('#dark-mode-toggle');
+        const logo = document.querySelector('.logo img');
 
-        darkModeToggle.addEventListener('change', () => {
+        function toggleDarkMode() {
             body.classList.toggle('dark-mode');
-        });
+            // Toggle logo between light and dark mode
+            if (body.classList.contains('dark-mode')) {
+                logo.src = 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true';
+            } else {
+                logo.src = 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true';
+            }
+        }
     </script>
 </body>
 </html>
