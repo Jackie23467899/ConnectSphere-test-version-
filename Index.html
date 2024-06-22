@@ -241,29 +241,29 @@
         </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-    <script>
-        // JavaScript for toggling dark mode and changing logo
-        function toggleDarkMode() {
-            const body = document.body;
-            const isDarkMode = body.classList.toggle('dark-mode');
-            const darkModeLogo = document.querySelector('.dark-mode-logo');
-            const lightModeLogo = document.querySelector('.light-mode-logo');
-            const sunIcon = document.querySelector('.sun-icon');
-            const moonIcon = document.querySelector('.moon-icon');
+  <script>
+    function toggleDarkMode() {
+        const body = document.body;
+        const isDarkMode = body.classList.toggle('dark-mode');
+        const darkModeLogo = document.querySelector('.dark-mode-logo');
+        const lightModeLogo = document.querySelector('.light-mode-logo');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
 
-            // Change logo and icons based on dark mode status
-            darkModeLogo.style.display = isDarkMode ? 'block' : 'none';
-            lightModeLogo.style.display = isDarkMode ? 'none' : 'block';
-            moonIcon.style.display = isDarkMode ? 'inline-block' : 'none';
-            sunIcon.style.display = isDarkMode ? 'none' : 'inline-block';
-            document.querySelector('.dark-mode-toggle').innerText = isDarkMode ? 'Light Mode' : 'Dark Mode'; // Update button text
-        }
+        // Change logo and icons based on dark mode status
+        darkModeLogo.style.display = isDarkMode ? 'block' : 'none';
+        lightModeLogo.style.display = isDarkMode ? 'none' : 'block';
+        moonIcon.style.display = isDarkMode ? 'inline-block' : 'none';
+        sunIcon.style.display = isDarkMode ? 'none' : 'inline-block';
+        document.querySelector('.dark-mode-toggle').innerText = isDarkMode ? 'Light Mode' : 'Dark Mode'; // Update button text
+    }
 
-        // Initial check for dark mode preference
-        const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDarkMode) {
-            toggleDarkMode(); // If the system prefers dark mode, switch to dark mode on page load
-        }
-    </script>
+    // Initial check for dark mode preference
+    const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (prefersDarkMode) {
+        toggleDarkMode(); // If the system prefers dark mode, switch to dark mode on page load
+    }
+</script>
+</html>
 </body>
 </html>
