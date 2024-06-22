@@ -36,6 +36,7 @@
             border-radius: 50%;
             background-color: white;
             padding: 5px;
+            transition: background-color 0.3s;
         }
 
         h1 {
@@ -141,18 +142,31 @@
             cursor: pointer;
             font-size: 18px;
         }
+
+        .sun-icon {
+            display: none;
+        }
+
+        .moon-icon {
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <!-- Logo -->
+            <!-- Logo with light mode and dark mode versions -->
             <div class="logo">
-                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Logo">
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Light Mode Logo">
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" class="dark-mode-logo">
             </div>
             <h1>Welcome to Social Media App</h1>
             <!-- Dark mode toggle button -->
-            <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+                <i class="sun-icon fas fa-sun"></i>
+                <i class="moon-icon fas fa-moon"></i>
+                Dark Mode
+            </button>
         </div>
     </header>
     <nav>
@@ -205,16 +219,20 @@
             <p>&copy; 2024 Social Media App. All rights reserved.</p>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script>
-        // JavaScript for toggling dark mode
+        // JavaScript for toggling dark mode and changing logo
+<script>
+    function toggleDarkMode() {
         const body = document.body;
-        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        const isDarkMode = body.classList.toggle('dark-mode');
+        const darkModeLogo = document.querySelector('.dark-mode-logo');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
 
-        function toggleDarkMode() {
-            body.classList.toggle('dark-mode');
-            const isDarkMode = body.classList.contains('dark-mode');
-            darkModeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
-        }
-    </script>
-</body>
-</html>
+        // Change logo and icons based on dark mode status
+        darkModeLogo.src = isDarkMode ? 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true' : 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true';
+        sunIcon.style.display = isDarkMode ? 'inline-block' : 'none';
+        moonIcon.style.display = isDarkMode ? 'none' : 'inline-block';
+    }
+</script>
