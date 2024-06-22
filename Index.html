@@ -150,6 +150,16 @@
         .moon-icon {
             display: inline-block;
         }
+
+        /* Hide light mode logo in dark mode */
+        body.dark-mode .logo #lightLogo {
+            display: none;
+        }
+
+        /* Hide dark mode logo in light mode */
+        body:not(.dark-mode) .logo #darkLogo {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -225,18 +235,22 @@
         function toggleDarkMode() {
             const body = document.body;
             const isDarkMode = body.classList.toggle('dark-mode');
-            const lightLogo = document.getElementById('lightLogo');
-            const darkLogo = document.getElementById('darkLogo');
+            const darkModeLogo = document.querySelector('.dark-mode-logo');
             const sunIcon = document.querySelector('.sun-icon');
             const moonIcon = document.querySelector('.moon-icon');
-            const darkModeToggle = document.querySelector('.dark-mode-toggle');
 
-            // Change logo, icons, and button text based on dark mode status
-            lightLogo.style.display = isDarkMode ? 'none' : 'block';
-            darkLogo.style.display = isDarkMode ? 'block' : 'none';
+            // Change logo and icons based on dark mode status
+            darkModeLogo.src = isDarkMode ? 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true' : 'https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true';
             sunIcon.style.display = isDarkMode ? 'inline-block' : 'none';
             moonIcon.style.display = isDarkMode ? 'none' : 'inline-block';
-            darkModeToggle.innerText = isDarkMode ? 'Light Mode' : 'Dark Mode';
+
+            // Hide light mode logo in dark mode
+            const lightLogo = document.getElementById('lightLogo');
+            lightLogo.style.display = isDarkMode ? 'none' : 'inline-block';
+
+            // Hide dark mode logo in light mode
+            const darkLogo = document.getElementById('darkLogo');
+            darkLogo.style.display = isDarkMode ? 'inline-block' : 'none';
         }
     </script>
 </body>
