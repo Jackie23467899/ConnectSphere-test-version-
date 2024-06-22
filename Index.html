@@ -149,26 +149,52 @@
         .switch {
             position: relative;
             display: inline-block;
-            width: 40px;
-            height: 20px;
-            background-color: gray;
-            border-radius: 15px;
-            margin: 0 10px;
+            width: 60px;
+            height: 34px;
         }
 
-        .switch div {
+        .switch input {
+            display: none;
+        }
+
+        .slider {
             position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 16px;
-            height: 16px;
-            background-color: white;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
         }
 
-        input[type="checkbox"]:checked + .switch div {
-            transform: translateX(20px);
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -182,14 +208,10 @@
             </div>
             <h1>Welcome to Social Media App</h1>
             <!-- Dark mode switch -->
-            <div class="darkmode-switch">
-                <span>LIGHT</span>
-                <label class="switch">
-                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
-                    <div></div>
-                </label>
-                <span>DARK</span>
-            </div>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                <span class="slider round"></span>
+            </label>
         </div>
     </header>
     <nav>
@@ -239,6 +261,7 @@
     </main>
     <footer>
         <div class="container">
+           
             <p>&copy; 2024 Social Media App. All rights reserved.</p>
         </div>
     </footer>
