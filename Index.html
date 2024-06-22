@@ -29,21 +29,27 @@
             color: white;
             padding: 1em 0;
             text-align: center;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: relative; /* Added positioning */
         }
 
         .logo {
-            margin-bottom: 1em;
+            position: absolute; /* Absolute positioning for the logo */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the logo */
+            z-index: 1; /* Ensure logo is above other content */
         }
 
         .logo img {
             width: 80px;
             height: 80px;
+            border-radius: 50%; /* Rounded logo */
+            background-color: white; /* White background for contrast */
+            padding: 5px; /* Add padding for border */
+        }
+
+        h1 {
+            margin-top: 50px; /* Adjust top margin for header content */
         }
 
         nav {
@@ -84,13 +90,9 @@
             margin-bottom: 2em;
         }
 
-        h1, h2 {
+        h2 {
             font-weight: bold;
             margin-bottom: 0.5em;
-        }
-
-        p {
-            margin-bottom: 1em;
         }
 
         ul {
@@ -177,12 +179,11 @@
 <body>
     <header>
         <div class="container">
-            <!-- Display the small logo in the header -->
+            <!-- Display the logo in the header -->
             <div class="logo">
                 <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Logo">
             </div>
             <h1>Welcome to Social Media App</h1>
-            <button id="theme-toggle">Toggle Dark Mode</button>
         </div>
     </header>
     <nav>
@@ -226,19 +227,27 @@
             <div class="container">
                 <h2>Contact Us</h2>
                 <img src="https://via.placeholder.com/1200x600?text=Contact+Us+Image" alt="Contact Us Image">
-                <p>Have questions or feedback? We'd love to hear from you. Email us at <a href="mailto:support@socialmediaapp.com">support@socialmediaapp.com</a>.</p>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Social Media App. All rights reserved.</p>
-        </div>
-    </footer>
-    <script>
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-        });
-    </script>
+<section id="contact">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <img src="https://via.placeholder.com/1200x600?text=Contact+Us+Image" alt="Contact Us Image">
+        <p>Have questions or feedback? We'd love to hear from you. Email us at <a href="mailto:support@socialmediaapp.com">support@socialmediaapp.com</a>.</p>
+    </div>
+</section>
+</main>
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Social Media App. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+    // JavaScript for toggling dark mode
+    const body = document.body;
+    const darkModeToggle = document.querySelector('#dark-mode-toggle');
+
+    darkModeToggle.addEventListener('change', () => {
+        body.classList.toggle('dark-mode');
+    });
+</script>
 </body>
 </html>
