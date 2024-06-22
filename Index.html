@@ -130,6 +130,18 @@
         body.dark-mode footer {
             background-color: #1a1a1a;
         }
+
+        /* Dark mode toggle button */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -140,6 +152,8 @@
                 <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Logo">
             </div>
             <h1>Welcome to Social Media App</h1>
+            <!-- Dark mode toggle button -->
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
         </div>
     </header>
     <nav>
