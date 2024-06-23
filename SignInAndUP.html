@@ -4,60 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In & Sign Up</title>
-    <style>
-        /* CSS styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        form label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        form input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-        }
-
-        form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        form button:hover {
-            background-color: #0056b3;
-        }
-
-        #message {
-            margin-top: 15px;
-            color: red;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1>Sign Up</h1>
         <form id="signup-form">
             <label for="signup-email">Email:</label>
@@ -89,19 +38,20 @@
         // Your web app's Firebase configuration
         const firebaseConfig = {
 
-  apiKey: "AIzaSyCrmOXUM5gJNAIMJkvrXwBtR8i4ysZ0y6c",
+    apiKey: "AIzaSyCrmOXUM5gJNAIMJkvrXwBtR8i4ysZ0y6c",
 
-  authDomain: "social-media-database-73aa6.firebaseapp.com",
+    authDomain: "social-media-database-73aa6.firebaseapp.com",
 
-  projectId: "social-media-database-73aa6",
+    projectId: "social-media-database-73aa6",
 
-  storageBucket: "social-media-database-73aa6.appspot.com",
+    storageBucket: "social-media-database-73aa6.appspot.com",
 
-  messagingSenderId: "246486911903",
+    messagingSenderId: "246486911903",
 
-  appId: "1:246486911903:web:cec641432c1186fbc28baa"
+    appId: "1:246486911903:web:cec641432c1186fbc28baa"
 
-};
+  };
+
 
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
