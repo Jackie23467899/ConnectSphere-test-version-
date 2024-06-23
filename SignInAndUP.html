@@ -1,65 +1,141 @@
-<script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-<script>
-const firebaseConfig = {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth0 Authentication</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: "Comic Neue", cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-size: cover;
+            background-image: url("https://drive.google.com/uc?export=view&id=1fci3Cw_5o8jvswnsvHnGojPEBWS5on4i");
+        }
+        #formContainer {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input[type="email"], input[type="password"], button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #alertContainer {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .success-message, .error-message {
+            display: none;
+        }
+        .success-message {
+            color: green;
+        }
+        .error-message {
+            color: red;
+        }
+        .auth-link {
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="formContainer">
+        <h1 id="form-title">Sign In</h1>
+        <input type="email" placeholder="Enter your email" id="email"/>
+        <input type="password" placeholder="Enter your password" id="password"/>
+        <button id="submit-btn">Sign In</button>
+        <div id="alertContainer">
+            <p class="success-message" id="success-message">Welcome back to perfectgoodblog!</p>
+            <p class="error-message" id="error-message">Oops! Something went wrong. Please try again.</p>
+        </div>
+        <a href="#" class="auth-link" id="toggle-form">Don't have an account? Create one</a>
+    </div>
 
-  apiKey: "AIzaSyCrmOXUM5gJNAIMJkvrXwBtR8i4ysZ0y6c",
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.18.0/auth0-spa-js.production.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const auth0 = await createAuth0Client({
+                domain: "dev-2z4cj80n3sd6hlj3.us.auth0.com",
+                client_id: "G4aznURUp5K954VH2EJpmZp6dIOPG4kM"
+            });
 
-  authDomain: "social-media-database-73aa6.firebaseapp.com",
+            const formTitle = document.getElementById('form-title');
+            const submitBtn = document.getElementById('submit-btn');
+            const toggleFormLink = document.getElementById('toggle-form');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
 
-  databaseURL: "https://social-media-database-73aa6-default-rtdb.firebaseio.com",
+            let isLogin = true;
 
-  projectId: "social-media-database-73aa6",
+            toggleFormLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                isLogin = !isLogin;
+                formTitle.textContent = isLogin ? 'Sign In' : 'Sign Up';
+                submitBtn.textContent = isLogin ? 'Sign In' : 'Sign Up';
+                toggleFormLink.textContent = isLogin ? "Don't have an account? Create one" : 'Already have an account? Sign In';
+            });
 
-  storageBucket: "social-media-database-73aa6.appspot.com",
+            submitBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
 
-  messagingSenderId: "246486911903",
-
-  appId: "1:246486911903:web:cec641432c1186fbc28baa"
-
-};
-
-// Get references to the email and password inputs, and the sign in and sign up buttons
-var email = document.getElementById("email");
-var password = document.getElementById("password");
-var signInButton = document.getElementById("signInButton");
-var signUpButton = document.getElementById("signUpButton");
-
-// Add event listeners to the sign in and sign up buttons
-signInButton.addEventListener("click", function() {
-  // Sign in the user using Firebase's signInWithEmailAndPassword method
-  firebase.auth().signInWithEmailAndPassword(email.value, password.value)
-    .then(function() {
-      // Redirect the user to the protected resources page
-      window.location.href = "/protected-resources.html";
-    })
-    .catch(function(error) {
-      // Show an error message
-      alert(error.message);
-    });
-});
-
-signUpButton.addEventListener("click", function() {
-  // Sign up the user using Firebase's createUserWithEmailAndPassword method
-  firebase.auth().createUserWithEmailAndPassword(email.value, password.value)
-    .then(function() {
-      // Redirect the user to the protected resources page
-      window.location.href = "/protected-resources.html";
-    })
-    .catch(function(error) {
-      // Show an error message
-      alert(error.message);
-    });
-});
-</script>
-<form>
-  <div>
-    <label for="email">Email</label>
-    <input type="email" id="email" required>
-  </div>
-  <div>
-    <label for="password">Password</label>
-    <input type="password" id="password" required>
-  </div>
-  <button type="submit">Sign up</button>
-</form>
+                try {
+                    if (isLogin) {
+                        await auth0.loginWithRedirect({
+                            redirect_uri: window.location.origin,
+                            login_hint: email,
+                            password
+                        });
+                        successMessage.textContent = 'Sign-in successful!';
+                    } else {
+                        await auth0.signupAndLogin({
+                            email,
+                            password,
+                            redirect_uri: window.location.origin
+                        });
+                        successMessage.textContent = 'Sign-up successful!';
+                    }
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                } catch (error) {
+                    errorMessage.textContent = `Error: ${error.message}`;
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
