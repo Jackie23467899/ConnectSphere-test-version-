@@ -3,68 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Sign In & Sign Up</title>
     <style>
         /* CSS styles */
         body {
-            font-family: "Comic Neue", cursive;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-size: cover;
-            background-image: url("https://drive.google.com/uc?export=view&id=1fci3Cw_5o8jvswnsvHnGojPEBWS5on4i");
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
         }
 
-        #formContainer {
-            background-color: rgba(255, 255, 255, 0.8);
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
             padding: 20px;
+            border: 1px solid #ccc;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
+            background-color: #fff;
         }
 
         h1 {
             margin-bottom: 20px;
-            color: #333;
         }
 
-        input[type="email"], input[type="password"], button {
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input {
             width: 100%;
-            margin-bottom: 10px;
             padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 16px;
         }
 
-        button {
+        form button {
+            width: 100%;
+            padding: 10px;
             background-color: #007bff;
             color: #fff;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
         }
 
-        button:hover {
+        form button:hover {
             background-color: #0056b3;
         }
 
-        #alertContainer {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .success-message, .error-message {
-            display: none;
-            color: green;
-        }
-
-        .error-message {
+        #message {
+            margin-top: 15px;
             color: red;
+            font-weight: bold;
+            display: none;
         }
 
         .auth-link {
@@ -73,82 +66,111 @@
             text-decoration: none;
             margin-top: 10px;
             display: block;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div id="formContainer">
+    <div class="container">
         <h1>Sign Up</h1>
         <form id="signup-form">
             <label for="signup-email">Email:</label>
-            <input type="email" placeholder="Enter your email" id="signup-email" name="signup-email" required><br><br>
+            <input type="email" id="signup-email" name="signup-email" required><br><br>
 
             <label for="signup-password">Password:</label>
-            <input type="password" placeholder="Enter your password" id="signup-password" name="signup-password" required><br><br>
+            <input type="password" id="signup-password" name="signup-password" required><br><br>
 
-            <button type="submit" id="signup">Sign Up</button>
+            <button type="submit">Sign Up</button>
         </form>
-        <div id="signupAlertContainer">
-            <p class="success-message">Sign-up successful! You can now sign in.</p>
-            <p class="error-message">Error: Please fill in all fields.</p>
-        </div>
-        <a href="#" class="auth-link" id="signinLink">Already have an account? Sign in</a>
+
+        <h1>Sign In</h1>
+        <form id="signin-form">
+            <label for="signin-email">Email:</label>
+            <input type="email" id="signin-email" name="signin-email" required><br><br>
+
+            <label for="signin-password">Password:</label>
+            <input type="password" id="signin-password" name="signin-password" required><br><br>
+
+            <button type="submit">Sign In</button>
+        </form>
+
+        <div id="message"></div>
+        <a href="#" class="auth-link" id="signupLink">Already have an account? Sign in</a>
     </div>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import {getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+    <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+
+  apiKey: "AIzaSyCrmOXUM5gJNAIMJkvrXwBtR8i4ysZ0y6c",
+
+  authDomain: "social-media-database-73aa6.firebaseapp.com",
+
+  projectId: "social-media-database-73aa6",
+
+  storageBucket: "social-media-database-73aa6.appspot.com",
+
+  messagingSenderId: "246486911903",
+
+  appId: "1:246486911903:web:cec641432c1186fbc28baa"
+
+};
+
+
 
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = app.auth();
 
-        const signupButton = document.getElementById('signup');
-        const emailInput = document.getElementById('signup-email');
-        const passwordInput = document.getElementById('signup-password');
-        const successMessage = document.querySelector('.success-message');
-        const errorMessage = document.querySelector('.error-message');
-        const signinLink = document.getElementById('signinLink');
+        const signupForm = document.getElementById('signup-form');
+        const signinForm = document.getElementById('signin-form');
+        const message = document.getElementById('message');
+        const signupLink = document.getElementById('signupLink');
 
-        signupButton.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent form submission
-            const email = emailInput.value;
-            const password = passwordInput.value;
+        // Function to handle sign-up
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
 
-            // Check if email and password fields are not empty
-            if (email.trim() === '' || password.trim() === '') {
-                errorMessage.style.display = 'block';
-                return; // Exit the function if fields are empty
-            }
-
-            // Proceed with sign-up if fields are filled
-            createUserWithEmailAndPassword(auth, email, password)
+            auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    // User signed up successfully
-                    const user = userCredential.user;
-                    console.log('User signed up:', user.email);
-                    successMessage.style.display = 'block';
+                    message.innerText = 'Sign-up successful! You can now sign in.';
+                    message.style.color = 'green';
+                    message.style.display = 'block';
                 })
                 .catch((error) => {
-                    const errorMessageText = error.message;
-                    console.error('Error:', errorMessageText);
-                    errorMessage.style.display = 'block';
+                    const errorMessage = error.message;
+                    message.innerText = 'Error: ' + errorMessage;
+                    message.style.color = 'red';
+                    message.style.display = 'block';
                 });
         });
 
-                // Redirect to sign in page when "Already have an account? Sign in" link is clicked
-        signinLink.addEventListener('click', (event) => {
+        // Function to handle sign-in
+        signinForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    message.innerText = 'Sign-in successful!';
+                    message.style.color = 'green';
+                    message.style.display = 'block';
+                })
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    message.innerText = 'Error: ' + errorMessage;
+                    message.style.color = 'red';
+                    message.style.display = 'block';
+                });
+        });
+
+        // Redirect to sign in page when "Already have an account? Sign in" link is clicked
+        signupLink.addEventListener('click', (event) => {
             event.preventDefault();
             // Redirect to sign in page
             window.location.href = "signin.html";
