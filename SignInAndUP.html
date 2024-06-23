@@ -1,152 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In & Sign Up</title>
-    <style>
-        /* CSS styles */
-        body {
-            font-family: "Comic Neue", cursive;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-size: cover;
-            background-image: url("https://drive.google.com/uc?export=view&id=1fci3Cw_5o8jvswnsvHnGojPEBWS5on4i");
-        }
+  <title>Firebase Authentication Example</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrmOXUM5gJNAIMJkvrXwBtR8i4ysZ0y6c",
+      authDomain: "social-media-database-73aa6.firebaseapp.com",
+      projectId: "social-media-database-73aa6",
+      storageBucket: "social-media-database-73aa6.appspot.com",
+      messagingSenderId: "246486911903",
+      appId: "1:246486911903:web:cec641432c1186fbc28baa"
+    };
 
-        #formContainer {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-        h1 {
-            margin-bottom: 20px;
-            color: #333;
-        }
+    // Sign-Up with Email/Password
+    const signUpForm = document.getElementById('signUpForm');
+    signUpForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-        input[type="email"], input[type="password"], button {
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // User successfully created
+          const user = userCredential.user;
+          console.log('User created:', user);
+          // Redirect to a welcome page or display a success message
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error creating user:', error);
+          // Display an error message to the user
+        });
+    });
 
-        button {
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-        }
+    // Sign-In with Email/Password
+    const signInForm = document.getElementById('signInForm');
+    signInForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-        button:hover {
-            background-color: #0056b3;
-        }
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // User successfully signed in
+          const user = userCredential.user;
+          console.log('User signed in:', user);
+          // Redirect to the user's dashboard or display a welcome message
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error signing in:', error);
+          // Display an error message to the user
+        });
+    });
 
-        #alertContainer {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .success-message, .error-message {
-            display: none;
-            color: green;
-        }
-
-        .error-message {
-            color: red;
-        }
-
-        .auth-link {
-            font-size: 14px;
-            color: #007bff;
-            text-decoration: none;
-            margin-top: 10px;
-            display: block;
-        }
-    </style>
+    // Authentication State Listener
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in
+        console.log('User is signed in:', user);
+        // Hide the sign-up and sign-in forms
+        document.getElementById('signUpForm').style.display = 'none';
+        document.getElementById('signInForm').style.display = 'none';
+        // Show the user's dashboard or welcome message
+      } else {
+        // User is signed out
+        console.log('User is signed out');
+        // Show the sign-up and sign-in forms
+        document.getElementById('signUpForm').style.display = 'block';
+        document.getElementById('signInForm').style.display = 'block';
+      }
+    });
+  </script>
 </head>
 <body>
-    <div id="formContainer">
-        <h1>Sign In</h1>
-        <input type="email" placeholder="Enter your email" id="email"/>
-        <input type="password" placeholder="Enter your password" id="password"/>
-        <button id="signin">Sign In</button>
-        <div id="alertContainer">
-            <p class="success-message">Welcome back to perfectgoodblog!</p>
-            <p class="error-message">Oops! Something went wrong. Please try again.</p>
-        </div>
-        <a href="#" class="auth-link" id="signupLink">Don't have an account? Create one</a>
-    </div>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import {getAuth, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  <h1>Firebase Authentication Example</h1>
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+  <form id="signUpForm">
+    <h2>Sign Up</h2>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Sign Up</button>
+  </form>
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
-
-        const signinButton = document.getElementById('signin');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const successMessage = document.querySelector('.success-message');
-        const errorMessage = document.querySelector('.error-message');
-        const signupLink = document.getElementById('signupLink');
-
-        signinButton.addEventListener('click', ()=>{
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            signInWithEmailAndPassword(auth, email, password).then((userCredential)=>{
-                successMessage.textContent = "Welcome back to perfectgoodblog!";
-                successMessage.style.display = 'block';
-                emailInput.value = '';
-                passwordInput.value = '';
-                setTimeout(()=>{
-                    successMessage.style.display = 'none';
-                    window.location.href = "https://prfectgoodblog.blogspot.com/";
-                }, 3000);
-                // Remove the message after 3 seconds and redirect
-            }).catch((error)=>{
-                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-                    errorMessage.textContent = "Oops, the email or password that you've entered is incorrect. Please try again.";
-                } else {
-                    errorMessage.textContent = "Oops, something went wrong. Please try again.";
-                }
-                errorMessage.style.display = 'block';
-                setTimeout(()=>{
-                    errorMessage.style.display = 'none';
-                }, 3000);
-                // Remove the message after 3 seconds
-            });
-        });
-
-        // Redirect to sign up page when "Create one" link is clicked
-        signupLink.addEventListener('click', (event) => {
-            event.preventDefault();
-            // Redirect to sign up page
-            window.location.href = "signup.html";
-        });
-    </script>
+  <form id="signInForm">
+    <h2>Sign In</h2>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Sign In</button>
+  </form>
 </body>
 </html>
