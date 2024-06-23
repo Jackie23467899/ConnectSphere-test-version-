@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        header {
+            background-color: #35465d;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: white;
+            padding: 5px;
+            transition: background-color 0.3s;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        nav {
+            background-color: #2a3b54;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #3c4f6d;
+        }
+
+        main {
+            padding: 2em 0;
+        }
+
+        section {
+            margin-bottom: 2em;
+        }
+
+        h2 {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode header {
+            background-color: #1f1f1f;
+        }
+
+        body.dark-mode nav {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode nav ul li a:hover {
+            background-color: #333;
+        }
+
+        body.dark-mode footer {
+            background-color: #1a1a1a;
+        }
+
+        /* Dark mode toggle button */
+        .darkmode-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .darkmode-switch label {
+            margin: 0 10px;
+        }
+
+        .darkmode-switch input {
+            display: none;
+        }
+
+        .darkmode-switch div {
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .darkmode-switch div::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: white;
+            border-radius: 50%;
+            top: 1px;
+            left: 1px;
+            transition: transform 0.3s ease;
+        }
+
+        input:checked + div {
+            background-color: #35465d;
+        }
+
+        input:checked + div::before {
+            transform: translateX(20px);
+        }
+
+        .darkmode-switch .fa-moon, .darkmode-switch .fa-sun {
+            display: none;
+        }
+
+        input:checked ~ .fa-sun {
+            display: inline-block;
+        }
+
+        input:not(:checked) ~ .fa-moon {
+            display: inline-block;
+        }
+
+        /* Forms */
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2em;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        .form-container h2 {
+            text-align: center;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 0.5em;
+            margin: 0.5em 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 0.5em;
+            border: none;
+            border-radius: 5px;
+            background-color: #35465d;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #2a3b54;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia.png?raw=true" alt="Light Mode Logo" class="light-mode-logo">
+                <img src="https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/FastMedia%20(1).png?raw=true" alt="Dark Mode Logo" class="dark-mode-logo" style="display:none;">
+            </div>
+            <h1>Welcome to Social Media App</h1>
+            <div class="darkmode-switch">
+                <span><i class="fas fa-sun"></i></span>
+                <label class="switch">
+                    <input type="checkbox" name="toggle-darkmode" id="darkmode-toggle">
+                    <div></div>
+                </label>
+                <span><i class="fas fa-moon"></i></span>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#signup">Sign Up</a></li>
+                <li><a href="#login">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <section id="home">
+            <div class="container">
+                <h2>Connect. Share. Discover.</h2>
+                <img src="https://via.placeholder.com/1200x600?text=Welcome+Image" alt="Welcome Image">
+                <p>Welcome to our vibrant social media platform, where you can connect with friends, share your thoughts, and discover new ideas.</p>
+            </div>
+        </section>
+        <section id="about">
+            <div class="container">
+                <h2>About Us</h2>
+                <img src="https://via.placeholder.com/1200x600?text=About+Us+Image" alt="About Us Image">
+                <p>Our social media platform is designed to bring people together, foster meaningful connections, and empower users to express themselves.</p>
+            </div>
+        </section>
+        <section id="features">
+            <div class="container">
+                <h2>Key Features</h2>
+                <img src="https://via.placeholder.com/1200x600?text=Features+Image" alt="Features Image">
+                <ul>
+                    <li>Create and share posts</li>
+                    <li>Chat with friends in real time</li>
+                    <li>Follow topics you love</li>
+                    <li>Receive personalized recommendations</li>
+                </ul>
+            </div>
+        </section>
+        <section id="contact">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <img src="https://via.placeholder.com/1200x600?text=Contact+Us+Image" alt="Contact Us Image">
+                <p>Have questions or feedback? We'd love to hear from you. Email us at <a href="mailto:support@socialmediaapp.com">support@socialmediaapp.com</a>.</p>
+            </div>
+        </section>
+        <section id="signup">
+            <div class="container form-container">
+                <h2>Sign Up</h2>
+                <input type="email" id="signup-email" placeholder="Email">
+                <input type="password" id="signup-password" placeholder="Password">
+                <button onclick="signUp()">Sign Up</button>
+            </div>
+        </section>
+        <section id="login">
+            <div class="container form-container">
+                <h2>Login</h2>
+                <input type="email" id="login-email" placeholder="Email">
+                <input type="password" id="login-password" placeholder="Password">
+                <button onclick="login()">Login</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Social Media App. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCrmOXUM5gJNAIMJkvrXwBtR8i4ysZ0y6c",
+            authDomain: "social-media-database-73aa6.firebaseapp.com",
+            projectId: "social-media-database-73aa6",
+            storageBucket: "social-media-database-73aa6.appspot.com",
+            messagingSenderId: "246486911903",
+            appId: "1:246486911903:web:cec641432c1186fbc28baa"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Sign up function
+        function signUp() {
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    alert('User signed up: ' + user.email);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert('Error: ' + errorMessage);
+                });
+        }
+
+        // Login function
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    alert('User logged in: ' + user.email);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert('Error: ' + errorMessage);
+                });
+        }
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkmode-toggle');
+        darkModeToggle.addEventListener('change', toggleDarkMode);
+
+        function toggleDarkMode() {
+            const body = document.body;
+            const isDarkMode = body.classList.toggle('dark-mode');
+            const darkModeLogo = document.querySelector('.dark-mode-logo');
+            const lightModeLogo = document.querySelector('.light-mode-logo');
+
+            darkModeLogo.style.display = isDarkMode ? 'inline' : 'none';
+            lightModeLogo.style.display = isDarkMode ? 'none' : 'inline';
+        }
+    </script>
+</body>
+</html>
