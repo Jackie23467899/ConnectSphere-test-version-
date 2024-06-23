@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In & Sign Up</title>
+    <title>Sign Up</title>
     <style>
         /* CSS styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Comic Neue", cursive;
             margin: 0;
             padding: 0;
             display: flex;
@@ -18,7 +18,7 @@
             background-image: url("https://drive.google.com/uc?export=view&id=1fci3Cw_5o8jvswnsvHnGojPEBWS5on4i");
         }
 
-        .form-container {
+        #formContainer {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 8px;
@@ -77,23 +77,17 @@
     </style>
 </head>
 <body>
-    <div class="form-container" id="signinForm">
-        <h1>Sign In</h1>
-        <input type="email" placeholder="Enter your email" id="email"/>
-        <input type="password" placeholder="Enter your password" id="password"/>
-        <button id="signin">Sign In</button>
-        <div id="alertContainer">
-            <p class="success-message">Welcome back to perfectgoodblog!</p>
-            <p class="error-message">Oops! Something went wrong. Please try again.</p>
-        </div>
-        <a href="#" class="auth-link" id="signupLink">Don't have an account? Create one</a>
-    </div>
-
-    <div class="form-container" id="signupForm" style="display: none;">
+    <div id="formContainer">
         <h1>Sign Up</h1>
-        <input type="email" placeholder="Enter your email" id="signupEmail"/>
-        <input type="password" placeholder="Enter your password" id="signupPassword"/>
-        <button id="signup">Sign Up</button>
+        <form id="signup-form">
+            <label for="signup-email">Email:</label>
+            <input type="email" placeholder="Enter your email" id="signup-email" name="signup-email" required><br><br>
+
+            <label for="signup-password">Password:</label>
+            <input type="password" placeholder="Enter your password" id="signup-password" name="signup-password" required><br><br>
+
+            <button type="submit" id="signup">Sign Up</button>
+        </form>
         <div id="signupAlertContainer">
             <p class="success-message">Sign-up successful! You can now sign in.</p>
             <p class="error-message">Error: Please fill in all fields.</p>
@@ -104,76 +98,61 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import {getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "<YOUR_API_KEY>",
-            authDomain: "<YOUR_AUTH_DOMAIN>",
-            projectId: "<YOUR_PROJECT_ID>",
-            storageBucket: "<YOUR_STORAGE_BUCKET>",
-            messagingSenderId: "<YOUR_MESSAGING_SENDER_ID>",
-            appId: "<YOUR_APP_ID>"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
 
-        const signinForm = document.getElementById('signinForm');
-        const signupForm = document.getElementById('signupForm');
+        const signupButton = document.getElementById('signup');
+        const emailInput = document.getElementById('signup-email');
+        const passwordInput = document.getElementById('signup-password');
+        const successMessage = document.querySelector('.success-message');
+        const errorMessage = document.querySelector('.error-message');
         const signinLink = document.getElementById('signinLink');
-        const signupLink         = document.getElementById('signupLink');
 
-        // Function to toggle between sign-in and sign-up forms
-        signinLink.addEventListener('click', () => {
-            signinForm.style.display = 'block';
-            signupForm.style.display = 'none';
-        });
+        signupButton.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent form submission
+            const email = emailInput.value;
+            const password = passwordInput.value;
 
-        signupLink.addEventListener('click', () => {
-            signinForm.style.display = 'none';
-            signupForm.style.display = 'block';
-        });
+            // Check if email and password fields are not empty
+            if (email.trim() === '' || password.trim() === '') {
+                errorMessage.style.display = 'block';
+                return; // Exit the function if fields are empty
+            }
 
-        // Function to handle sign-in
-        document.getElementById('signin').addEventListener('click', () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // User signed in successfully
-                    const user = userCredential.user;
-                    console.log('User signed in:', user.email);
-                    document.querySelector('#alertContainer .success-message').style.display = 'block';
-                })
-                .catch((error) => {
-                    const errorMessage = error.message;
-                    console.error('Error:', errorMessage);
-                    document.querySelector('#alertContainer .error-message').style.display = 'block';
-                });
-        });
-
-        // Function to handle sign-up
-        document.getElementById('signup').addEventListener('click', () => {
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-
+            // Proceed with sign-up if fields are filled
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     // User signed up successfully
                     const user = userCredential.user;
                     console.log('User signed up:', user.email);
-                    document.querySelector('#signupAlertContainer .success-message').style.display = 'block';
+                    successMessage.style.display = 'block';
                 })
                 .catch((error) => {
-                    const errorMessage = error.message;
-                    console.error('Error:', errorMessage);
-                    document.querySelector('#signupAlertContainer .error-message').style.display = 'block';
+                    const errorMessageText = error.message;
+                    console.error('Error:', errorMessageText);
+                    errorMessage.style.display = 'block';
                 });
+        });
+
+                // Redirect to sign in page when "Already have an account? Sign in" link is clicked
+        signinLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            // Redirect to sign in page
+            window.location.href = "signin.html";
         });
     </script>
 </body>
 </html>
-
