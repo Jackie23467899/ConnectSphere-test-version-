@@ -1,4 +1,11 @@
- <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In & Sign Up</title>
+    <style>
+        /* CSS styles */
         body {
             font-family: "Comic Neue", cursive;
             margin: 0;
@@ -68,8 +75,8 @@
             display: block;
         }
     </style>
-
-
+</head>
+<body>
     <div id="formContainer">
         <h1>Sign In</h1>
         <input type="email" placeholder="Enter your email" id="email"/>
@@ -83,17 +90,17 @@
     </div>
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import {getAuth, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {getAuth, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyCCs2IWCW8b-zadNjd6m0lmDADoTIoDNNk",
-            authDomain: "pefectgoodblog-sign-in-up.firebaseapp.com",
-            projectId: "pefectgoodblog-sign-in-up",
-            storageBucket: "pefectgoodblog-sign-in-up.appspot.com",
-            messagingSenderId: "841115388480",
-            appId: "1:841115388480:web:e8cdf307cd04d22970eda5"
+            apiKey: "<YOUR_API_KEY>",
+            authDomain: "<YOUR_AUTH_DOMAIN>",
+            projectId: "<YOUR_PROJECT_ID>",
+            storageBucket: "<YOUR_STORAGE_BUCKET>",
+            messagingSenderId: "<YOUR_MESSAGING_SENDER_ID>",
+            appId: "<YOUR_APP_ID>"
         };
 
         // Initialize Firebase
@@ -107,27 +114,27 @@
         const errorMessage = document.querySelector('.error-message');
         const signupLink = document.getElementById('signupLink');
 
-        signinButton.addEventListener('click', ()=>{
+        signinButton.addEventListener('click', () => {
             const email = emailInput.value;
             const password = passwordInput.value;
-            signInWithEmailAndPassword(auth, email, password).then((userCredential)=>{
+            signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
                 successMessage.textContent = "Welcome back to perfectgoodblog!";
                 successMessage.style.display = 'block';
                 emailInput.value = '';
                 passwordInput.value = '';
-                setTimeout(()=>{
+                setTimeout(() => {
                     successMessage.style.display = 'none';
                     window.location.href = "https://prfectgoodblog.blogspot.com/";
                 }, 3000);
                 // Remove the message after 3 seconds and redirect
-            }).catch((error)=>{
+            }).catch((error) => {
                 if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
                     errorMessage.textContent = "Oops, the email or password that you've entered is incorrect. Please try again.";
                 } else {
                     errorMessage.textContent = "Oops, something went wrong. Please try again.";
                 }
                 errorMessage.style.display = 'block';
-                setTimeout(()=>{
+                setTimeout(() => {
                     errorMessage.style.display = 'none';
                 }, 3000);
                 // Remove the message after 3 seconds
@@ -142,4 +149,5 @@
         });
     </script>
 
-</!doctype>
+</body>
+</html>
