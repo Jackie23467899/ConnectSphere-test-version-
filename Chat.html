@@ -243,101 +243,27 @@
         </div>
     </div>
 
+    <script src="https://cdn.socket.io/4.3.1/socket.io.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Placeholder for setting profile name functionality
-            const profileName = localStorage.getItem('profileName');
-            if (profileName) {
-                document.getElementById('profile-name').textContent = profileName;
-            } else {
-                const name = prompt('What is your name?');
-                if (name) {
-                    localStorage.setItem('profileName', name);
-                    document.getElementById('profile-name').textContent = name;
-                }
-            }
+            const socket = io();
 
-            // Placeholder for adding contacts functionality
-            const contactsList = document.getElementById('contacts-list');
-            const groupContactsList = document.getElementById('group-contacts-list');
-
-            document.getElementById('add-contact-btn').addEventListener('click', () => {
-                const contactInput = document.getElementById('contact-input');
-                const contactName = contactInput.value.trim();
-                if (contactName) {
-                    addContact(contactName);
-                    contactInput.value = '';
-                }
+            // Placeholder for handling incoming messages
+            socket.on('chat message', (msg) => {
+                const chatMessages = document.getElementById('chat-messages');
+                const p = document.createElement('p');
+                p.textContent = msg;
+                chatMessages.appendChild(p);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
             });
 
-            function addContact(contactName) {
-                const li = document.createElement('li');
-                li.textContent = contactName;
-
-                const blockButton = document.createElement('button');
-                blockButton.textContent = 'Block';
-                blockButton.className = 'block-button';
-                blockButton.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    contactsList.removeChild(li);
-                    alert(`${contactName} has been blocked.`);
-                });
-
-                li.appendChild(blockButton);
-                contactsList.appendChild(li);
-
-                // Add contact to the group contacts list
-                const groupLi = document.createElement('li');
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = contactName;
-
-                groupLi.appendChild(checkbox);
-                groupLi.appendChild(document.createTextNode(contactName));
-                groupContactsList.appendChild(groupLi);
-            }
-
-            // Placeholder for creating groups functionality
-            document.getElementById('create-group-btn').addEventListener('click', () => {
-                const groupNameInput = document.getElementById('group-name-input');
-                const groupName = groupNameInput.value.trim();
-                if (groupName) {
-                    const selectedContacts = [];
-                    const checkboxes = groupContactsList.querySelectorAll('input[type="checkbox"]:checked');
-                    checkboxes.forEach(checkbox => {
-                        selectedContacts.push(checkbox.value);
-                    });
-                    if (selectedContacts.length > 0) {
-                        createGroup(groupName, selectedContacts);
-                        groupNameInput.value = '';
-                        checkboxes.forEach(checkbox => {
-                            checkbox.checked = false;
-                        });
-                    } else {
-                        alert('Please select at least one contact.');
-                    }
-                } else {
-                    alert('Please enter a group name.');
-                }
-            });
-
-            function createGroup(groupName, contacts) {
-                const groupLi = document.createElement('li');
-                groupLi.textContent = `${groupName} (Group: ${contacts.join(', ')})`;
-                contactsList.appendChild(groupLi);
-            }
-
-            // Placeholder for sending messages functionality
+            // Placeholder for sending messages
             document.getElementById('send-message-btn').addEventListener('click', () => {
                 const messageInput = document.getElementById('message-input');
-                const chatMessages = document.getElementById('chat-messages');
                 const messageText = messageInput.value.trim();
                 if (messageText) {
-                    const p = document.createElement('p');
-                    p.textContent = messageText;
-                    chatMessages.appendChild(p);
+                    socket.emit('chat message', messageText);
                     messageInput.value = '';
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
             });
         });
