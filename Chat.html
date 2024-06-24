@@ -21,12 +21,15 @@
         .chat-container {
             width: 80%;
             max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9); /* Transparent white background */
+            min-height: 80vh; /* Make the container longer */
+            background-color: rgba(255, 255, 255, 0.3); /* Transparent white background */
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Blurred box shadow */
             padding: 20px;
             backdrop-filter: blur(10px); /* Blurred background */
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .profile {
@@ -46,9 +49,16 @@
             margin-right: 10px;
         }
 
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
         .input-area {
             display: flex;
-            margin-top: 10px;
+            margin-top: auto;
         }
 
         .input-area input {
@@ -123,6 +133,7 @@
                 newMessage.textContent = `${username}: ${message}`;
                 chatMessages.appendChild(newMessage);
                 messageInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
             }
         }
     </script>
