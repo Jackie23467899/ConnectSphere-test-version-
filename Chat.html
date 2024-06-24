@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,28 +28,75 @@
             backdrop-filter: blur(10px); /* Blurred background */
         }
 
-        /* Other CSS styles for chat elements (contacts, chat messages, etc.) go here */
+        .input-area {
+            display: flex;
+            margin-top: 10px;
+        }
 
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .input-area button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
-
 <body>
-    <div class="chat-container">
+    <div class="chat-container" id="chatContainer">
         <!-- Chat interface content goes here -->
         <h1>Welcome to Your Chat App</h1>
-        <div class="chat-messages">
+        <div class="chat-messages" id="chatMessages">
             <!-- Chat messages display area -->
         </div>
-        <div class="input-area">
-            <input type="text" placeholder="Type your message...">
-            <button>Send</button>
+        <div class="input-area" id="inputArea" style="display: none;">
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
         </div>
     </div>
 
     <script>
         // JavaScript code for chat functionality
-        // You can add JavaScript code for sending/receiving messages, managing contacts, etc. here
+
+        // Check if username is stored in localStorage
+        let username = localStorage.getItem('username');
+        if (!username) {
+            // Prompt for username if not already stored
+            username = prompt("What is your name?");
+            if (username) {
+                localStorage.setItem('username', username);
+                document.getElementById('inputArea').style.display = 'flex';
+            } else {
+                alert("Username is required to use the chat.");
+            }
+        } else {
+            document.getElementById('inputArea').style.display = 'flex';
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+            if (message.trim() !== "") {
+                const chatMessages = document.getElementById('chatMessages');
+                const newMessage = document.createElement('div');
+                newMessage.textContent = `${username}: ${message}`;
+                chatMessages.appendChild(newMessage);
+                messageInput.value = '';
+            }
+        }
     </script>
 </body>
-
 </html>
