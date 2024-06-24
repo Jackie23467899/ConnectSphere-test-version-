@@ -45,11 +45,15 @@
         }
 
         .contacts li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
             padding: 10px;
             background-color: rgba(255, 255, 255, 0.5);
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .contacts li:hover {
@@ -83,31 +87,129 @@
             flex: 1;
             overflow-y: auto;
             margin-bottom: 20px;
-            color: #333;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 5px;
         }
 
-        .input-area {
+        .chat-messages p {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+
+        .message-input {
             display: flex;
+            justify-content: space-between;
         }
 
-        .input-area input {
+        .message-input input {
             flex: 1;
             padding: 10px;
-            border-radius: 5px;
+            font-size: 16px;
             border: 1px solid #ccc;
-        }
-
-        .input-area button {
-            padding: 10px 20px;
-            margin-left: 10px;
             border-radius: 5px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
+            margin-right: 10px;
+            transition: border-color 0.3s;
         }
 
-        .input-area button:hover {
+        .message-input input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .message-input button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .message-input button:hover {
+            background-color: #0056b3;
+        }
+
+        .add-contact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-contact input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .add-contact input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .add-contact button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-contact button:hover {
+            background-color: #218838;
+        }
+
+        .block-button {
+            padding: 5px 10px;
+            font-size: 12px;
+            color: #fff;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .block-button:hover {
+            background-color: #c82333;
+        }
+
+        .group-container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .group-container h3 {
+            margin-top: 0;
+        }
+
+        .create-group-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .create-group-button:hover {
             background-color: #0056b3;
         }
     </style>
@@ -115,93 +217,130 @@
 <body>
     <div class="main-container">
         <div class="contacts">
+            <div class="add-contact">
+                <input type="text" placeholder="Add new contact" id="contact-input">
+                <button id="add-contact-btn">Add</button>
+            </div>
             <h2>Contacts</h2>
-            <ul id="contactList">
-                <!-- Contacts will be listed here -->
-            </ul>
-            <input type="text" id="newContact" placeholder="Add new contact">
-            <button onclick="addContact()">Add</button>
+            <ul id="contacts-list"></ul>
+            <div class="group-container">
+                <h3>Create Group</h3>
+                <input type="text" placeholder="Group name" id="group-name-input">
+                <ul id="group-contacts-list"></ul>
+                <button id="create-group-btn" class="create-group-button">Create Group</button>
+            </div>
         </div>
-        <div class="chat-container" id="chatContainer">
-            <div class="profile" id="profileSection" style="display: none;">
+        <div class="chat-container">
+            <div class="profile">
                 <img src="https://via.placeholder.com/40" alt="Profile Picture">
-                <span id="usernameDisplay"></span>
+                <span id="profile-name">Username</span>
             </div>
-            <h1>Welcome to Your Chat App</h1>
-            <div class="chat-messages" id="chatMessages">
-                <!-- Chat messages display area -->
-            </div>
-            <div class="input-area" id="inputArea" style="display: none;">
-                <input type="text" id="messageInput" placeholder="Type your message...">
-                <button onclick="sendMessage()">Send</button>
+            <div class="chat-messages" id="chat-messages"></div>
+            <div class="message-input">
+                <input type="text" placeholder="Type a message" id="message-input">
+                <button id="send-message-btn">Send</button>
             </div>
         </div>
     </div>
 
     <script>
-        // JavaScript code for chat functionality
-
-        // Check if username is stored in localStorage
-        let username = localStorage.getItem('username');
-        if (!username) {
-            // Prompt for username if not already stored
-            username = prompt("What is your name?");
-            if (username) {
-                localStorage.setItem('username', username);
-                document.getElementById('inputArea').style.display = 'flex';
-                document.getElementById('profileSection').style.display = 'flex';
-                document.getElementById('usernameDisplay').textContent = username;
+        document.addEventListener('DOMContentLoaded', () => {
+            // Placeholder for setting profile name functionality
+            const profileName = localStorage.getItem('profileName');
+            if (profileName) {
+                document.getElementById('profile-name').textContent = profileName;
             } else {
-                alert("Username is required to use the chat.");
+                const name = prompt('What is your name?');
+                if (name) {
+                    localStorage.setItem('profileName', name);
+                    document.getElementById('profile-name').textContent = name;
+                }
             }
-        } else {
-            document.getElementById('inputArea').style.display = 'flex';
-            document.getElementById('profileSection').style.display = 'flex';
-            document.getElementById('usernameDisplay').textContent = username;
-        }
 
-        // Contacts functionality
-        const contactList = document.getElementById('contactList');
-        const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+            // Placeholder for adding contacts functionality
+            const contactsList = document.getElementById('contacts-list');
+            const groupContactsList = document.getElementById('group-contacts-list');
 
-        function displayContacts() {
-            contactList.innerHTML = '';
-            contacts.forEach(contact => {
-                const li = document.createElement('li');
-                li.textContent = contact;
-                li.addEventListener('click', () => {
-                    alert(`Start chatting with ${contact}`);
-                });
-                contactList.appendChild(li);
+            document.getElementById('add-contact-btn').addEventListener('click', () => {
+                const contactInput = document.getElementById('contact-input');
+                const contactName = contactInput.value.trim();
+                if (contactName) {
+                    addContact(contactName);
+                    contactInput.value = '';
+                }
             });
-        }
 
-        function addContact() {
-            const newContactInput = document.getElementById('newContact');
-            const newContact = newContactInput.value.trim();
-            if (newContact && !contacts.includes(newContact)) {
-                contacts.push(newContact);
-                localStorage.setItem('contacts', JSON.stringify(contacts));
-                newContactInput.value = '';
-                displayContacts();
+            function addContact(contactName) {
+                const li = document.createElement('li');
+                li.textContent = contactName;
+
+                const blockButton = document.createElement('button');
+                blockButton.textContent = 'Block';
+                blockButton.className = 'block-button';
+                blockButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    contactsList.removeChild(li);
+                    alert(`${contactName} has been blocked.`);
+                });
+
+                li.appendChild(blockButton);
+                contactsList.appendChild(li);
+
+                // Add contact to the group contacts list
+                const groupLi = document.createElement('li');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = contactName;
+
+                groupLi.appendChild(checkbox);
+                groupLi.appendChild(document.createTextNode(contactName));
+                groupContactsList.appendChild(groupLi);
             }
-        }
 
-        displayContacts();
+            // Placeholder for creating groups functionality
+            document.getElementById('create-group-btn').addEventListener('click', () => {
+                const groupNameInput = document.getElementById('group-name-input');
+                const groupName = groupNameInput.value.trim();
+                if (groupName) {
+                    const selectedContacts = [];
+                    const checkboxes = groupContactsList.querySelectorAll('input[type="checkbox"]:checked');
+                    checkboxes.forEach(checkbox => {
+                        selectedContacts.push(checkbox.value);
+                    });
+                    if (selectedContacts.length > 0) {
+                        createGroup(groupName, selectedContacts);
+                        groupNameInput.value = '';
+                        checkboxes.forEach(checkbox => {
+                            checkbox.checked = false;
+                        });
+                    } else {
+                        alert('Please select at least one contact.');
+                    }
+                } else {
+                    alert('Please enter a group name.');
+                }
+            });
 
-        // Send message functionality
-        function sendMessage() {
-            const messageInput = document.getElementById('messageInput');
-            const message = messageInput.value;
-            if (message.trim() !== "") {
-                const chatMessages = document.getElementById('chatMessages');
-                const newMessage = document.createElement('div');
-                newMessage.textContent = `${username}: ${message}`;
-                chatMessages.appendChild(newMessage);
-                messageInput.value = '';
-                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+            function createGroup(groupName, contacts) {
+                const groupLi = document.createElement('li');
+                groupLi.textContent = `${groupName} (Group: ${contacts.join(', ')})`;
+                contactsList.appendChild(groupLi);
             }
-        }
+
+            // Placeholder for sending messages functionality
+            document.getElementById('send-message-btn').addEventListener('click', () => {
+                const messageInput = document.getElementById('message-input');
+                const chatMessages = document.getElementById('chat-messages');
+                const messageText = messageInput.value.trim();
+                if (messageText) {
+                    const p = document.createElement('p');
+                    p.textContent = messageText;
+                    chatMessages.appendChild(p);
+                    messageInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+        });
     </script>
 </body>
 </html>
