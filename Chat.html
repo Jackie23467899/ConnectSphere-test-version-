@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Interface</title>
     <style>
-        /* CSS styles for the chat interface */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -13,31 +12,62 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             background: url("https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/bg.jpg?raw=true") no-repeat center center fixed;
             background-size: cover;
         }
 
-        .chat-container {
+        .main-container {
             width: 80%;
-            max-width: 800px;
-            min-height: 80vh; /* Make the container longer */
-            background-color: rgba(255, 255, 255, 0.3); /* Transparent white background */
+            height: 80vh;
+            background-color: rgba(255, 255, 255, 0.3);
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Blurred box shadow */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .contacts {
+            width: 30%;
             padding: 20px;
-            backdrop-filter: blur(10px); /* Blurred background */
-            position: relative;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .contacts h2 {
+            margin-top: 0;
+        }
+
+        .contacts ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contacts li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .contacts li:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .chat-container {
+            width: 70%;
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
         }
 
         .profile {
-            position: absolute;
-            top: 10px;
-            right: 20px;
             display: flex;
             align-items: center;
+            justify-content: flex-end;
             font-size: 14px;
             color: #333;
         }
@@ -58,7 +88,6 @@
 
         .input-area {
             display: flex;
-            margin-top: auto;
         }
 
         .input-area input {
@@ -84,21 +113,28 @@
     </style>
 </head>
 <body>
-    <div class="chat-container" id="chatContainer">
-        <!-- Profile section -->
-        <div class="profile" id="profileSection" style="display: none;">
-            <img src="https://via.placeholder.com/40" alt="Profile Picture">
-            <span id="usernameDisplay"></span>
+    <div class="main-container">
+        <div class="contacts">
+            <h2>Contacts</h2>
+            <ul id="contactList">
+                <!-- Contacts will be listed here -->
+            </ul>
+            <input type="text" id="newContact" placeholder="Add new contact">
+            <button onclick="addContact()">Add</button>
         </div>
-
-        <!-- Chat interface content goes here -->
-        <h1>Welcome to Your Chat App</h1>
-        <div class="chat-messages" id="chatMessages">
-            <!-- Chat messages display area -->
-        </div>
-        <div class="input-area" id="inputArea" style="display: none;">
-            <input type="text" id="messageInput" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send</button>
+        <div class="chat-container" id="chatContainer">
+            <div class="profile" id="profileSection" style="display: none;">
+                <img src="https://via.placeholder.com/40" alt="Profile Picture">
+                <span id="usernameDisplay"></span>
+            </div>
+            <h1>Welcome to Your Chat App</h1>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Chat messages display area -->
+            </div>
+            <div class="input-area" id="inputArea" style="display: none;">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
         </div>
     </div>
 
@@ -124,6 +160,36 @@
             document.getElementById('usernameDisplay').textContent = username;
         }
 
+        // Contacts functionality
+        const contactList = document.getElementById('contactList');
+        const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+
+        function displayContacts() {
+            contactList.innerHTML = '';
+            contacts.forEach(contact => {
+                const li = document.createElement('li');
+                li.textContent = contact;
+                li.addEventListener('click', () => {
+                    alert(`Start chatting with ${contact}`);
+                });
+                contactList.appendChild(li);
+            });
+        }
+
+        function addContact() {
+            const newContactInput = document.getElementById('newContact');
+            const newContact = newContactInput.value.trim();
+            if (newContact && !contacts.includes(newContact)) {
+                contacts.push(newContact);
+                localStorage.setItem('contacts', JSON.stringify(contacts));
+                newContactInput.value = '';
+                displayContacts();
+            }
+        }
+
+        displayContacts();
+
+        // Send message functionality
         function sendMessage() {
             const messageInput = document.getElementById('messageInput');
             const message = messageInput.value;
