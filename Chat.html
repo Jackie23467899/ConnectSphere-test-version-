@@ -270,3 +270,28 @@
     </script>
 </body>
 </html>
+<script src="https://cdn.socket.io/4.3.1/socket.io.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const socket = io(); // Connect to the Socket.IO server
+
+        // Placeholder for handling incoming messages
+        socket.on('chat message', (msg) => {
+            const chatMessages = document.getElementById('chat-messages');
+            const p = document.createElement('p');
+            p.textContent = msg;
+            chatMessages.appendChild(p);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+        });
+
+        // Placeholder for sending messages
+        document.getElementById('send-message-btn').addEventListener('click', () => {
+            const messageInput = document.getElementById('message-input');
+            const messageText = messageInput.value.trim();
+            if (messageText) {
+                socket.emit('chat message', messageText); // Emit message to the server
+                messageInput.value = '';
+            }
+        });
+    });
+</script>
