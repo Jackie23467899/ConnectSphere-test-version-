@@ -4,215 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Interface</title>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
-        /* Your existing CSS here */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url("https://github.com/Jackie23467899/ConnectSphere-test-version-/blob/main/bg.jpg?raw=true") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        .main-container {
-            width: 80%;
-            height: 80vh;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            display: flex;
-            overflow: hidden;
-        }
-
-        .contacts {
-            width: 30%;
-            padding: 20px;
-            border-right: 1px solid rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-        }
-
-        .contacts h2 {
-            margin-top: 0;
-        }
-
-        .contacts ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .contacts li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .contacts li:hover {
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-
-        .chat-container {
-            width: 70%;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 5px;
-        }
-
-        .chat-messages p {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-        }
-
-        .message-input {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .message-input input {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 10px;
-            transition: border-color 0.3s;
-        }
-
-        .message-input input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        .message-input button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .message-input button:hover {
-            background-color: #0056b3;
-        }
-
-        .add-contact {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .add-contact input {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 10px;
-            transition: border-color 0.3s;
-        }
-
-        .add-contact input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        .add-contact button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #28a745;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .add-contact button:hover {
-            background-color: #218838;
-        }
-
-        .block-button {
-            padding: 5px 10px;
-            font-size: 12px;
-            color: #fff;
-            background-color: #dc3545;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .block-button:hover {
-            background-color: #c82333;
-        }
-
-        .group-container {
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        .group-container h3 {
-            margin-top: 0;
-        }
-
-        .create-group-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 20px;
-        }
-
-        .create-group-button:hover {
-            background-color: #0056b3;
-        }
+        /* CSS styles from previous code */
     </style>
 </head>
 <body>
@@ -246,28 +40,99 @@
 
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script>
-        Pusher.logToConsole = true;
-
+        // Pusher configuration
         const pusher = new Pusher('40cef23173baad97896a', {
             cluster: 'mt1',
-            authEndpoint: 'YOUR_AUTH_ENDPOINT' // Replace with your auth endpoint if needed
+            encrypted: true
         });
 
-        const channel = pusher.subscribe('private-my-channel');
-        channel.bind('client-my-event', function(data) {
+        const channel = pusher.subscribe('my-channel');
+
+        // Function to handle incoming messages
+        channel.bind('my-event', function(data) {
             const chatMessages = document.getElementById('chat-messages');
             const p = document.createElement('p');
-            p.textContent = data.message;
+            p.textContent = `${data.username}: ${data.message}`;
             chatMessages.appendChild(p);
             chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
         });
 
+        // Prompt for username on page load
+        let username = prompt('Enter your username:');
+        while (!username) {
+            username = prompt('Enter a valid username:');
+        }
+        document.getElementById('profile-name').textContent = username;
+
+        // Function to send messages
         document.getElementById('send-message-btn').addEventListener('click', () => {
             const messageInput = document.getElementById('message-input');
             const messageText = messageInput.value.trim();
             if (messageText) {
-                channel.trigger('client-my-event', { message: messageText });
+                fetch('https://YOUR_SERVER_URL/pusher/trigger', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: messageText,
+                        username: username
+                    })
+                });
                 messageInput.value = '';
+            }
+        });
+
+        // Function to add contacts
+        document.getElementById('add-contact-btn').addEventListener('click', () => {
+            const contactInput = document.getElementById('contact-input');
+            const contactName = contactInput.value.trim();
+            if (contactName) {
+                // Check if the contact is available (dummy check)
+                const contactsList = document.getElementById('contacts-list');
+                const contactExists = Array.from(contactsList.children)
+                                        .some(li => li.textContent.includes(contactName));
+
+                if (!contactExists) {
+                    const li = document.createElement('li');
+                    li.textContent = contactName;
+                    li.classList.add('contact-item');
+                    contactsList.appendChild(li);
+                } else {
+                    alert('Contact already exists!');
+                }
+                contactInput.value = '';
+            }
+        });
+
+        // Function to create groups
+        document.getElementById('create-group-btn').addEventListener('click', () => {
+            const groupNameInput = document.getElementById('group-name-input');
+            const groupName = groupNameInput.value.trim();
+            const selectedContacts = document.querySelectorAll('.contact-item.selected');
+
+            if (groupName && selectedContacts.length > 0) {
+                const groupContacts = Array.from(selectedContacts).map(contact => contact.textContent);
+
+                // Dummy logic: create group here
+                const groupContactsList = document.getElementById('group-contacts-list');
+                const groupLi = document.createElement('li');
+                groupLi.textContent = groupName;
+                groupLi.classList.add('group-item');
+                groupContactsList.appendChild(groupLi);
+
+                selectedContacts.forEach(contact => contact.classList.remove('selected'));
+                groupNameInput.value = '';
+            } else {
+                alert('Please enter a group name and select contacts.');
+            }
+        });
+
+        // Event listener for clicking contacts
+        document.getElementById('contacts-list').addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.matches('.contact-item')) {
+                target.classList.toggle('selected');
             }
         });
     </script>
